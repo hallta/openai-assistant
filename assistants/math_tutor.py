@@ -5,7 +5,7 @@ client = OpenAI(
 )
 
 ######
-# Using: https://platform.openai.com/docs/assistants/quickstart?context=without-streaming
+# https://platform.openai.com/docs/assistants/quickstart?context=without-streaming
 ######
 
 assistant = client.beta.assistants.create(
@@ -33,7 +33,7 @@ run = client.beta.threads.runs.create_and_poll(
     instructions="Please address the user as Jane Doe. The user has a premium account."
 )
 
-if run.status == 'completed': 
+if run.status == 'completed':
     messages = client.beta.threads.messages.list(thread_id=thread.id)
     print(messages)
 else:
