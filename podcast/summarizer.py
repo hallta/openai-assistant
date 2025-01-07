@@ -13,6 +13,10 @@ podcasts = [
     }
 ]
 
+# 1. curl the link
+# 2. nav the DOM
+# 3. body.textual.p[1..]
+
 messages = []
 template = """
 
