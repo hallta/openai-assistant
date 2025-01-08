@@ -1,4 +1,6 @@
-openai
+html2text
 langchain
 langchain-core
 langchain-openai
+openai
+parsel
