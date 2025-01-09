@@ -4,6 +4,8 @@ import parsel
 import requests
 from openai import OpenAI
 
+CONTXT_WINDOW_SIZE = 30000
+
 client = OpenAI(
     api_key=os.environ.get("OPENAI_API_KEY")
 )
@@ -38,19 +40,18 @@ for p in podcasts:
     r = requests.get(p["link"])
     html = r.text
     parsel_dom = parsel.Selector(text=html)
-    statements = parsel_dom.css("div.body p").getall()
+    transcript = h2t.handle(''.join(parsel_dom.css("div.body p").getall()))
 
-    for s in statements:
-        messages.append(
-            {
-                "role": "system",
-                "content": template.format(
-                    title=p["title"],
-                    pub=p["published_date"],
-                    transcript=h2t.handle(s)
-                )
-            }
-        )
+    messages.append(
+        {
+            "role": "system",
+            "content": template.format(
+                title=p["title"],
+                pub=p["published_date"],
+                transcript=' '.join(transcript.split(' ')[:20000])
+            )
+        }
+    )
 
 messages.append(
     {
